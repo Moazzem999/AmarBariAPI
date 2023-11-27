@@ -6,7 +6,6 @@ namespace AmarBari.Entities
 {
     public class Flats
     {
-
         [Key]
         public long Id { get; set; }
 
@@ -22,5 +21,8 @@ namespace AmarBari.Entities
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public bool IsActive { get; set; }
+
+
+        public virtual List<Renters> Renters { get; set; }
     }
 }
