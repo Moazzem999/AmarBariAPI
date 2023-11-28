@@ -44,6 +44,9 @@ namespace AmarBari.Entities
         [Precision(18, 2)]
         public decimal OthersBill { get; set; } = 0;
 
+        [Precision(18, 2)]
+        public decimal TotalAmount { get; set; } = 0;
+
         [Column(TypeName = "nvarchar(20)")]
         public string PaymentStatus { get; set; }
 

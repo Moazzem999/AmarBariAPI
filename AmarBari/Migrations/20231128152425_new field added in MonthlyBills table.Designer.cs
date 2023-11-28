@@ -4,6 +4,7 @@ using AmarBari.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmarBari.Migrations
 {
     [DbContext(typeof(AmarBariDbContext))]
-    partial class AmarBariDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231128152425_new field added in MonthlyBills table")]
+    partial class newfieldaddedinMonthlyBillstable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
