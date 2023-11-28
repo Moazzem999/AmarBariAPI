@@ -5,10 +5,12 @@ namespace AmarBari.Entities
     public class AmarBariDbContext : DbContext
     {
         public AmarBariDbContext(DbContextOptions options) : base(options) { }
-
-        public virtual DbSet<Flats> Flats { get; set; }
+        
         public virtual DbSet<Users> Users { get; set; }
-
+        public virtual DbSet<Buildings> Buildings { get; set; }
+        public virtual DbSet<Flats> Flats { get; set; }
+        public virtual DbSet<Renters> Renters { get; set; }     
+        public virtual DbSet<MonthlyBills> MonthlyBills { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

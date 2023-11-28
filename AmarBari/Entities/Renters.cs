@@ -51,6 +51,8 @@ namespace AmarBari.Entities
         public bool IsActive { get; set; }
 
 
+        [ForeignKey("FlatId")]
         public virtual Flats Flat { get; set; } = null!;
+        public virtual List<MonthlyBills> MonthlyBills { get; set; }
     }
 }

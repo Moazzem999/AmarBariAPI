@@ -4,6 +4,7 @@ using AmarBari.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmarBari.Migrations
 {
     [DbContext(typeof(AmarBariDbContext))]
-    partial class AmarBariDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231128133124_new table added buildings")]
+    partial class newtableaddedbuildings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,84 +98,6 @@ namespace AmarBari.Migrations
                     b.HasIndex("BuildingId");
 
                     b.ToTable("Flats");
-                });
-
-            modelBuilder.Entity("AmarBari.Entities.MonthlyBills", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal>("BillPerUnit")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("CurrentMonthUnit")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ElectricityBill")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("GasBill")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("HouseRent")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MonthOfBill")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<decimal>("OthersBill")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<decimal>("PreviousMonthUnit")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<long>("RenterId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("ServiceCharge")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("UnitUsed")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("WaterBill")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RenterId");
-
-                    b.ToTable("MonthlyBills");
                 });
 
             modelBuilder.Entity("AmarBari.Entities.Renters", b =>
@@ -329,17 +254,6 @@ namespace AmarBari.Migrations
                     b.Navigation("Building");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.MonthlyBills", b =>
-                {
-                    b.HasOne("AmarBari.Entities.Renters", "Renter")
-                        .WithMany("MonthlyBills")
-                        .HasForeignKey("RenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Renter");
-                });
-
             modelBuilder.Entity("AmarBari.Entities.Renters", b =>
                 {
                     b.HasOne("AmarBari.Entities.Flats", "Flat")
@@ -359,11 +273,6 @@ namespace AmarBari.Migrations
             modelBuilder.Entity("AmarBari.Entities.Flats", b =>
                 {
                     b.Navigation("Renters");
-                });
-
-            modelBuilder.Entity("AmarBari.Entities.Renters", b =>
-                {
-                    b.Navigation("MonthlyBills");
                 });
 
             modelBuilder.Entity("AmarBari.Entities.Users", b =>
