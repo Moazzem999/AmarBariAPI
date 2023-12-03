@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AmarBari.Entities
 {
-    public class MonthlyBills
+    public class MonthlyBill
     {
         [Key]
         public long Id { get; set; }
@@ -59,6 +59,6 @@ namespace AmarBari.Entities
 
 
         [ForeignKey("RenterId")]
-        public virtual Renters Renter { get; set; } = null!;
+        public virtual Renter Renter { get; set; } = null!;
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AmarBari.Entities
 {
-    public class Users
+    public class User
     {
         [Key]
         public long Id { get; set; }
@@ -39,6 +39,6 @@ namespace AmarBari.Entities
         public bool IsActive { get; set; }
         public long? RenterId { get; set; }
 
-        public virtual List<Buildings> Buildings { get; set; }
+        public virtual List<Building> Buildings { get; set; }
     }
 }

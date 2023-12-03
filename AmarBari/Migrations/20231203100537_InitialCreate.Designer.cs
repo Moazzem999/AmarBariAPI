@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmarBari.Migrations
 {
     [DbContext(typeof(AmarBariDbContext))]
-    [Migration("20231128152830_for field added default value")]
-    partial class forfieldaddeddefaultvalue
+    [Migration("20231203100537_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace AmarBari.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AmarBari.Entities.Buildings", b =>
+            modelBuilder.Entity("AmarBari.Entities.Building", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +62,7 @@ namespace AmarBari.Migrations
                     b.ToTable("Buildings");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Flats", b =>
+            modelBuilder.Entity("AmarBari.Entities.Flat", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -100,7 +100,7 @@ namespace AmarBari.Migrations
                     b.ToTable("Flats");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.MonthlyBills", b =>
+            modelBuilder.Entity("AmarBari.Entities.MonthlyBill", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -182,7 +182,7 @@ namespace AmarBari.Migrations
                     b.ToTable("MonthlyBills");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Renters", b =>
+            modelBuilder.Entity("AmarBari.Entities.Renter", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -255,7 +255,7 @@ namespace AmarBari.Migrations
                     b.ToTable("Renters");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Users", b =>
+            modelBuilder.Entity("AmarBari.Entities.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -314,9 +314,9 @@ namespace AmarBari.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Buildings", b =>
+            modelBuilder.Entity("AmarBari.Entities.Building", b =>
                 {
-                    b.HasOne("AmarBari.Entities.Users", "User")
+                    b.HasOne("AmarBari.Entities.User", "User")
                         .WithMany("Buildings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -325,9 +325,9 @@ namespace AmarBari.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Flats", b =>
+            modelBuilder.Entity("AmarBari.Entities.Flat", b =>
                 {
-                    b.HasOne("AmarBari.Entities.Buildings", "Building")
+                    b.HasOne("AmarBari.Entities.Building", "Building")
                         .WithMany("Flats")
                         .HasForeignKey("BuildingId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -336,9 +336,9 @@ namespace AmarBari.Migrations
                     b.Navigation("Building");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.MonthlyBills", b =>
+            modelBuilder.Entity("AmarBari.Entities.MonthlyBill", b =>
                 {
-                    b.HasOne("AmarBari.Entities.Renters", "Renter")
+                    b.HasOne("AmarBari.Entities.Renter", "Renter")
                         .WithMany("MonthlyBills")
                         .HasForeignKey("RenterId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,9 +347,9 @@ namespace AmarBari.Migrations
                     b.Navigation("Renter");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Renters", b =>
+            modelBuilder.Entity("AmarBari.Entities.Renter", b =>
                 {
-                    b.HasOne("AmarBari.Entities.Flats", "Flat")
+                    b.HasOne("AmarBari.Entities.Flat", "Flat")
                         .WithMany("Renters")
                         .HasForeignKey("FlatId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -358,22 +358,22 @@ namespace AmarBari.Migrations
                     b.Navigation("Flat");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Buildings", b =>
+            modelBuilder.Entity("AmarBari.Entities.Building", b =>
                 {
                     b.Navigation("Flats");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Flats", b =>
+            modelBuilder.Entity("AmarBari.Entities.Flat", b =>
                 {
                     b.Navigation("Renters");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Renters", b =>
+            modelBuilder.Entity("AmarBari.Entities.Renter", b =>
                 {
                     b.Navigation("MonthlyBills");
                 });
 
-            modelBuilder.Entity("AmarBari.Entities.Users", b =>
+            modelBuilder.Entity("AmarBari.Entities.User", b =>
                 {
                     b.Navigation("Buildings");
                 });

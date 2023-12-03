@@ -67,7 +67,7 @@ namespace AmarBari.Controllers
             }
         }
 
-        private async Task<Users> GetUser(string loginId, string password)
+        private async Task<User> GetUser(string loginId, string password)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.LoginId == loginId && u.Password == password && u.IsActive == true);
         }

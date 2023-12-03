@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AmarBari.Entities
 {
-    public class Flats
+    public class Flat
     {
         [Key]
         public long Id { get; set; }
@@ -25,7 +25,7 @@ namespace AmarBari.Entities
 
 
         [ForeignKey("BuildingId")]
-        public virtual Buildings Building { get; set; } = null!;
-        public virtual List<Renters> Renters { get; set; }
+        public virtual Building Building { get; set; } = null!;
+        public virtual List<Renter> Renters { get; set; }
     }
 }

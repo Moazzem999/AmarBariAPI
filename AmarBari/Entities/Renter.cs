@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AmarBari.Entities
 {
-    public class Renters
+    public class Renter
     {
         [Key]
         public long Id { get; set; }
@@ -52,7 +52,7 @@ namespace AmarBari.Entities
 
 
         [ForeignKey("FlatId")]
-        public virtual Flats Flat { get; set; } = null!;
-        public virtual List<MonthlyBills> MonthlyBills { get; set; }
+        public virtual Flat Flat { get; set; } = null!;
+        public virtual List<MonthlyBill> MonthlyBills { get; set; }
     }
 }

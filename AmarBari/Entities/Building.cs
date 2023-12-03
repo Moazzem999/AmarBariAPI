@@ -4,7 +4,7 @@ using AmarBari.Enum;
 
 namespace AmarBari.Entities
 {
-    public class Buildings
+    public class Building
     {
         [Key]
         public long Id { get; set; }
@@ -24,7 +24,7 @@ namespace AmarBari.Entities
 
 
         [ForeignKey("UserId")]
-        public virtual Users User { get; set; } = null!;
-        public virtual List<Flats> Flats { get; set; }
+        public virtual User User { get; set; } = null!;
+        public virtual List<Flat> Flats { get; set; }
     }
 }
