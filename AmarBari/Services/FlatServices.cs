@@ -37,7 +37,6 @@ namespace AmarBari.Services
         public async Task<object> GetFlat(long id)
         {
             var data = await _context.Flats.Include(x => x.Building.User).FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
-
             if (data != null)
             {
                 return new
@@ -55,7 +54,6 @@ namespace AmarBari.Services
 
         public async Task<object> AddFlat(FlatDto flat)
         {
-
             var newFlat = new Flat
             {
                 BuildingId = flat.BuildingId,
@@ -86,7 +84,6 @@ namespace AmarBari.Services
         public async Task<object> UpdateFlat(FlatDto flat)
         {
             var data = await _context.Flats.FirstOrDefaultAsync(x => x.Id == flat.Id && x.BuildingId == flat.BuildingId && x.IsActive == true);
-
             if (data!= null)
             {
                 data.Name = flat.Name;
@@ -104,10 +101,9 @@ namespace AmarBari.Services
         public async Task<bool> DeleteFlat(long id)
         {
             var data = await _context.Flats.FindAsync(id);
-
             if (data != null)
             {
-                _context.Flats.Remove(data);
+                data.IsActive = false;
                 await _context.SaveChangesAsync();
                 return true;
             }

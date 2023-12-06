@@ -3,6 +3,6 @@
     public enum ElectricMeterType
     {
         Prepaid = 1,
-        Postpaid = 2,
+        Postpaid = 2
     }
 }
