@@ -10,18 +10,24 @@ namespace AmarBari.Controllers
     [ApiController]
     public class FlatController : ControllerBase
     {
-        private readonly IFlatServices _causesServices;
+        private readonly IFlatServices _flatServices;
 
-        public FlatController(IFlatServices causesServices)
+        public FlatController(IFlatServices flatServices)
         {
-            _causesServices = causesServices;
+            _flatServices = flatServices;
         }
 
-        [HttpGet("GetAllFlats")]
-        public async Task<IActionResult> GetAllCauses()
+        [HttpGet]
+        public async Task<IActionResult> GetFlats()
         {
-            var data = await _causesServices.GetAllFlats();
-            return Ok(data);
+            try
+            {
+                return Ok(await _flatServices.GetFlats());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
         }
     }
 }
