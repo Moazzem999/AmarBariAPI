@@ -7,16 +7,16 @@ namespace AmarBari.Services
 {
     public class FlatServices : IFlatServices
     {
-        private readonly AmarBariDbContext _context;
+        private readonly AmarBariDbContext context;
         public FlatServices(AmarBariDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public async Task<List<object>> GetFlats()
         {
             var flatList = new List<object>();
-            var data = await _context.Flats.Include(x => x.Building)
+            var data = await context.Flats.Include(x => x.Building)
                 .Where(x => x.IsActive == true).OrderByDescending(x => x.Id).ToListAsync();
 
             foreach (var item in data)
@@ -36,7 +36,7 @@ namespace AmarBari.Services
 
         public async Task<object> GetFlat(long id)
         {
-            var data = await _context.Flats.Include(x => x.Building.User).FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
+            var data = await context.Flats.Include(x => x.Building.User).FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
             if (data != null)
             {
                 return new
@@ -65,10 +65,10 @@ namespace AmarBari.Services
                 IsActive = true
             };
 
-            await _context.Flats.AddAsync(newFlat);
-            await _context.SaveChangesAsync();
+            await context.Flats.AddAsync(newFlat);
+            await context.SaveChangesAsync();
 
-            var data = await _context.Flats.Include(x => x.Building).FirstOrDefaultAsync(x => x.Id == newFlat.Id);
+            var data = await context.Flats.Include(x => x.Building).FirstOrDefaultAsync(x => x.Id == newFlat.Id);
 
             return new
             {
@@ -83,7 +83,7 @@ namespace AmarBari.Services
 
         public async Task<object> UpdateFlat(FlatDto flat)
         {
-            var data = await _context.Flats.FirstOrDefaultAsync(x => x.Id == flat.Id && x.BuildingId == flat.BuildingId && x.IsActive == true);
+            var data = await context.Flats.FirstOrDefaultAsync(x => x.Id == flat.Id && x.BuildingId == flat.BuildingId && x.IsActive == true);
             if (data!= null)
             {
                 data.Name = flat.Name;
@@ -91,7 +91,7 @@ namespace AmarBari.Services
                 data.Floor = flat.Floor;
                 data.UpdatedDate = DateTime.Now;
 
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return data;
             }
 
@@ -100,11 +100,11 @@ namespace AmarBari.Services
 
         public async Task<bool> DeleteFlat(long id)
         {
-            var data = await _context.Flats.FindAsync(id);
+            var data = await context.Flats.FindAsync(id);
             if (data != null)
             {
                 data.IsActive = false;
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return true;
             }
 
@@ -113,7 +113,7 @@ namespace AmarBari.Services
 
         public async Task<bool> CheckDuplicateFlat(string name, long buildingId)
         {
-            var checkDuplicateFlat = await _context.Flats.FirstOrDefaultAsync(x => x.Name == name && x.BuildingId == buildingId && x.IsActive == true);
+            var checkDuplicateFlat = await context.Flats.FirstOrDefaultAsync(x => x.Name == name && x.BuildingId == buildingId && x.IsActive == true);
             bool returnType = checkDuplicateFlat != null;
             return returnType;
         }
