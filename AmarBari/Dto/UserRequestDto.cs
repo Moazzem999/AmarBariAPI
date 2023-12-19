@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AmarBari.Dto
 {
-    public class UserDto
+    public class UserRequestDto
     {
         public long Id { get; set; }
         public string Name { get; set; }

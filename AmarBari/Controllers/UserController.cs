@@ -56,7 +56,7 @@ namespace AmarBari.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromForm] UserDto user)
+        public async Task<IActionResult> CreateUser([FromForm] UserRequestDto user)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace AmarBari.Controllers
         }
 
         [HttpPut("{id:long}")]
-        public async Task<IActionResult> UpdateUser(long id, [FromForm] UserDto user)
+        public async Task<IActionResult> UpdateUser(long id, [FromForm] UserRequestDto user)
         {
             try
             {
@@ -162,7 +162,7 @@ namespace AmarBari.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
+                    "Error deleting data from the database");
             }
         }
     }

@@ -15,15 +15,15 @@ namespace AmarBari.Services
             this.context = context;
             this.webHostEnvironment = webHostEnvironment;
         }
-        public async Task<List<object>> GetUsers()
+        public async Task<List<UserResponseDto>> GetUsers()
         {
-            var userList = new List<object>();
+            var userList = new List<UserResponseDto>();
             var data = await context.Users
                 .Where(x => x.IsActive == true).OrderByDescending(x => x.Id).ToListAsync();
 
             foreach (var item in data)
             {
-                userList.Add(new
+                userList.Add(new UserResponseDto
                 {
                     Id = item.Id,
                     UserType = item.UserType,
@@ -39,28 +39,29 @@ namespace AmarBari.Services
             return userList;
         }
 
-        public async Task<object> GetUser(long id)
+        public async Task<UserResponseDto> GetUser(long id)
         {
             var data = await context.Users.FirstOrDefaultAsync(x => x.Id == id && x.IsActive == true);
-            if (data != null)
+            if (data == null)
             {
-                return new
-                {
-                    Id = data.Id,
-                    UserType = data.UserType,
-                    Name = data.Name,
-                    Email = data.Email,
-                    NidNo = data.NidNo,
-                    ImageUrl = data.ImageUrl,
-                    NidImageUrl = data.NidImageUrl,
-                    LoginId = data.LoginId,
-                    IsApproved = data.IsApproved
-                };
+                return null;
             }
-            return data;
+
+            return new UserResponseDto
+            {
+                Id = data.Id,
+                UserType = data.UserType,
+                Name = data.Name,
+                Email = data.Email,
+                NidNo = data.NidNo,
+                ImageUrl = data.ImageUrl,
+                NidImageUrl = data.NidImageUrl,
+                LoginId = data.LoginId,
+                IsApproved = data.IsApproved
+            };
         }
 
-        public async Task<User> AddUser(UserDto user)
+        public async Task<User> AddUser(UserRequestDto user)
         {
             string imageUrl = "\\Images\\" + user.NidNo + "_Image_" + user.Image.FileName;
             string nidImageUrl = "\\Images\\" + user.NidNo + "_NidImage_" + user.NidImage.FileName;
@@ -104,7 +105,7 @@ namespace AmarBari.Services
             return newUser;
         }
 
-        public async Task<User> UpdateUser(UserDto user)
+        public async Task<User> UpdateUser(UserRequestDto user)
         {
             var data = await context.Users.FirstOrDefaultAsync(x => x.Id == user.Id && x.IsActive == true);
 
@@ -173,10 +174,10 @@ namespace AmarBari.Services
 
     public interface IUserServices
     {
-        Task<List<object>> GetUsers();
-        Task<object> GetUser(long id);
-        Task<User> AddUser(UserDto user);
-        Task<User> UpdateUser(UserDto user);
+        Task<List<UserResponseDto>> GetUsers();
+        Task<UserResponseDto> GetUser(long id);
+        Task<User> AddUser(UserRequestDto user);
+        Task<User> UpdateUser(UserRequestDto user);
         Task<bool> DeleteUser(long id);
         Task<bool> CheckDuplicateUser(string nidNo);
     }
