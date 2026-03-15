@@ -1,0 +1,6 @@
+@AmarBariAPI_HostAddress = http://localhost:5000
+
+GET {{AmarBariAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
