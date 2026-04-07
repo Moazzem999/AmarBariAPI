@@ -16,6 +16,9 @@ namespace AmarBariAPI.Entities.Shop
         [MaxLength(50)]
         public string ShopNumber { get; set; } = string.Empty;
 
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal CurrentRent { get; set; }
+
         public long UserId { get; set; }
 
         [ForeignKey("UserId")]

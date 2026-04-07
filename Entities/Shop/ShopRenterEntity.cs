@@ -44,8 +44,10 @@ namespace AmarBariAPI.Entities.Shop
 
         [MaxLength(255)]
         public string? ImagePath { get; set; }
-
+        
         [ForeignKey("ShopId")]
         public virtual ShopEntity Shop { get; set; } = null!;
+
+        public virtual ICollection<ContractEntity> Contracts { get; set; } = [];
     }
 }
