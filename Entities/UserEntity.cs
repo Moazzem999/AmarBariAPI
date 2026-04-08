@@ -1,4 +1,5 @@
 ﻿using AmarBariAPI.Entities.Common;
+using AmarBariAPI.Entities.Home;
 using AmarBariAPI.Entities.Shop;
 using AmarBariAPI.Shared.Enum;
 using System.ComponentModel.DataAnnotations;
@@ -31,5 +32,6 @@ namespace AmarBariAPI.Entities
         public string? ImagePath { get; set; }
 
         public virtual ICollection<ShopEntity> Shops { get; set; } = [];
+        public virtual ICollection<HomeEntity> Homes { get; set; } = [];
     }
 }

@@ -4,6 +4,7 @@ using AmarBariAPI.Entities.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmarBariAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260408111347_new table added Homes, Flats, HomeRenters")]
+    partial class newtableaddedHomesFlatsHomeRenters
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +88,50 @@ namespace AmarBariAPI.Migrations
                     b.ToTable("Flats");
                 });
 
-            modelBuilder.Entity("AmarBariAPI.Entities.Home.FlatRenterEntity", b =>
+            modelBuilder.Entity("AmarBariAPI.Entities.Home.HomeEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("UpdatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("UpdatedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Homes");
+                });
+
+            modelBuilder.Entity("AmarBariAPI.Entities.Home.HomeRenterEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,50 +220,7 @@ namespace AmarBariAPI.Migrations
 
                     b.HasIndex("FlatId");
 
-                    b.ToTable("FlatRenters");
-                });
-
-            modelBuilder.Entity("AmarBariAPI.Entities.Home.HomeEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("UpdatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTimeOffset>("UpdatedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Homes");
+                    b.ToTable("HomeRenters");
                 });
 
             modelBuilder.Entity("AmarBariAPI.Entities.Shop.ContractEntity", b =>
@@ -479,17 +482,6 @@ namespace AmarBariAPI.Migrations
                     b.Navigation("Home");
                 });
 
-            modelBuilder.Entity("AmarBariAPI.Entities.Home.FlatRenterEntity", b =>
-                {
-                    b.HasOne("AmarBariAPI.Entities.Home.FlatEntity", "Flat")
-                        .WithMany("FlatRenters")
-                        .HasForeignKey("FlatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Flat");
-                });
-
             modelBuilder.Entity("AmarBariAPI.Entities.Home.HomeEntity", b =>
                 {
                     b.HasOne("AmarBariAPI.Entities.UserEntity", "User")
@@ -499,6 +491,17 @@ namespace AmarBariAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AmarBariAPI.Entities.Home.HomeRenterEntity", b =>
+                {
+                    b.HasOne("AmarBariAPI.Entities.Home.FlatEntity", "Flat")
+                        .WithMany("HomeRenters")
+                        .HasForeignKey("FlatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Flat");
                 });
 
             modelBuilder.Entity("AmarBariAPI.Entities.Shop.ContractEntity", b =>
@@ -536,7 +539,7 @@ namespace AmarBariAPI.Migrations
 
             modelBuilder.Entity("AmarBariAPI.Entities.Home.FlatEntity", b =>
                 {
-                    b.Navigation("FlatRenters");
+                    b.Navigation("HomeRenters");
                 });
 
             modelBuilder.Entity("AmarBariAPI.Entities.Home.HomeEntity", b =>

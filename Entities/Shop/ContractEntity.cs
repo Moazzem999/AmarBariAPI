@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AmarBariAPI.Entities.Shop
 {
+    [Table("Contracts")]
     public class ContractEntity : BaseEntity
     {
         public long ShopRenterId { get; set; }
