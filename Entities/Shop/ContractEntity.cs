@@ -16,6 +16,9 @@ namespace AmarBariAPI.Entities.Shop
 
         public DateTimeOffset EndDate { get; set; }
 
+        [MaxLength(255)]
+        public string? FilePath { get; set; }
+
         [ForeignKey("ShopRenterId")]
         public virtual ShopRenterEntity ShopRenter { get; set; } = null!;
     }
