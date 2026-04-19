@@ -1,10 +1,12 @@
 ﻿using AmarBariAPI.Entities.Home;
 using AmarBariAPI.Entities.Shop;
+using AmarBariAPI.Shared.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmarBariAPI.Entities.Context
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+    public class AppDbContext(DbContextOptions<AppDbContext> options,
+    ICurrentUserService currentUserService) : BaseDbContext(options, currentUserService)
     {
         public DbSet<UserEntity> Users { get; set; }
 

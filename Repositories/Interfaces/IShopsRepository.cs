@@ -6,5 +6,6 @@ namespace AmarBariAPI.Repositories.Interfaces
     public interface IShopsRepository
     {
         Task<Result<List<ShopResponseDto>>> GetAllShops();
+        Task<Result<long>> Create(ShopRequestDto dto);
     }
 }
