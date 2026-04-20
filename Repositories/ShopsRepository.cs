@@ -17,13 +17,30 @@ namespace AmarBariAPI.Repositories
 
         public async Task<Result<long>> Create(ShopRequestDto dto)
         {
+            if (dto == null)
+                return await Result<long>.BadRequestAsync("Invalid request.");
+
+            if (string.IsNullOrWhiteSpace(dto.ShopNumber))
+                return await Result<long>.BadRequestAsync("Shop number is required.");
+
+            var userId = currentUserService.UserId;
+
+            // Check duplicate ShopNumber for same user
+            var isExists = await context.Shops.AsNoTracking()
+                .AnyAsync(x => x.UserId == userId && x.ShopNumber == dto.ShopNumber);
+
+            if (isExists)
+            {
+                return await Result<long>.BadRequestAsync("This shop number already exists for your account.");
+            }
+
             var newEntity = new ShopEntity
             {
                 Name = dto.Name,
                 MarketName = dto.MarketName,
                 ShopNumber = dto.ShopNumber,
                 CurrentRent = dto.CurrentRent,
-                UserId = currentUserService.UserId
+                UserId = userId
             };
 
             await context.Shops.AddAsync(newEntity);
@@ -34,9 +51,10 @@ namespace AmarBariAPI.Repositories
 
         public async Task<Result<List<ShopResponseDto>>> GetAllShops()
         {
+            var userId = currentUserService.UserId;
             var data = await context.Shops
                 .AsNoTracking()
-                .Where(x => x.Status == Status.Active)
+                .Where(x => x.Status == Status.Active && x.UserId == userId && x.CreatedBy == userId)
                 .Select(x => new ShopResponseDto
                 {
                     Id = x.Id,
@@ -44,7 +62,7 @@ namespace AmarBariAPI.Repositories
                     MarketName = x.MarketName,
                     ShopNumber = x.ShopNumber,
                     CurrentRent = x.CurrentRent,
-                    OwnerId = x.User.Id,
+                    OwnerId = x.UserId,
                     OwnerName = x.User.Name,
                     CreatedOn = x.CreatedOn,
                     UpdatedOn = x.UpdatedOn,

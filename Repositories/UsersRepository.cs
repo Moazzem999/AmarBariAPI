@@ -37,6 +37,20 @@ namespace AmarBariAPI.Repositories
                 return await Result<long>.BadRequestAsync($"Please provide valid email address.");
             }
 
+            var existingUser = await context.Users.AsNoTracking()
+                .Where(x => x.UserName == dto.UserName || x.Email == dto.Email)
+                .Select(x => new { x.UserName, x.Email })
+                .FirstOrDefaultAsync();
+
+            if (existingUser != null)
+            {
+                if (existingUser.UserName == dto.UserName)
+                    return await Result<long>.BadRequestAsync("Username already taken.");
+
+                if (existingUser.Email == dto.Email)
+                    return await Result<long>.BadRequestAsync("Email already taken.");
+            }
+
             // BCrypt.HashPassword generates a random salt and incorporates it into the hash string
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
