@@ -21,21 +21,15 @@ namespace AmarBariAPI.Repositories
 
         public async Task<Result<long>> Create(UserRequestDto dto)
         {
-            if (dto == null)
-            {
+            if (dto is null)
                 return await Result<long>.BadRequestAsync($"Invalid request.");
-            }
 
             if (dto.UserName == string.Empty || dto.Password == string.Empty)
-            {
                 return await Result<long>.BadRequestAsync($"Username or Password can not be empty.");
-            }
 
             var isValidEmail = Helper.IsValidEmail(dto.Email);
             if (isValidEmail == false)
-            {
                 return await Result<long>.BadRequestAsync($"Please provide valid email address.");
-            }
 
             var existingUser = await context.Users.AsNoTracking()
                 .Where(x => x.UserName == dto.UserName || x.Email == dto.Email)
@@ -102,9 +96,7 @@ namespace AmarBariAPI.Repositories
                 .FirstOrDefaultAsync(u => u.UserName == dto.UserName && u.Status == Status.Active);
 
             if (user == null || !Helper.VerifyPassword(dto.Password, user.Password))
-            {
                 return await Result<LoginResponseDto>.ErrorAsync($"Please provide valid credentials.", (int)HttpStatusCode.Unauthorized);
-            }
 
             // Generate JWT
             var token = GenerateJwtToken(user);

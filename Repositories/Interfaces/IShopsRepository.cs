@@ -7,5 +7,7 @@ namespace AmarBariAPI.Repositories.Interfaces
     {
         Task<Result<List<ShopResponseDto>>> GetAllShops();
         Task<Result<long>> Create(ShopRequestDto dto);
+        Task<Result<ShopResponseDto>> Update(ShopRequestDto dto);
+        Task<Result<string>> Delete(int id);
     }
 }

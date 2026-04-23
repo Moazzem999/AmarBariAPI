@@ -25,5 +25,19 @@ namespace AmarBariAPI.Controllers
             var data = await shopsRepository.Create(dto);
             return Ok(data);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] ShopRequestDto dto)
+        {
+            var response = await shopsRepository.Update(dto);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var response = await shopsRepository.Delete(id);
+            return Ok(response);
+        }
     }
 }
