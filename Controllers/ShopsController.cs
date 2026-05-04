@@ -1,5 +1,5 @@
-﻿using AmarBariAPI.Dtos.Shop;
-using AmarBariAPI.Repositories.Interfaces;
+using AmarBariAPI.Dtos.Shop;
+using AmarBariAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,35 +8,33 @@ namespace AmarBariAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ShopsController(IShopsRepository shopsRepository) : ControllerBase
+    public class ShopsController(IShopService shopService) : ControllerBase
     {
-        private readonly IShopsRepository shopsRepository = shopsRepository;
-
         [HttpGet("GetAllShops")]
         public async Task<IActionResult> GetAllShops()
         {
-            var result = await shopsRepository.GetAllShops();
+            var result = await shopService.GetAllShops();
             return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ShopRequestDto dto)
         {
-            var data = await shopsRepository.Create(dto);
+            var data = await shopService.Create(dto);
             return Ok(data);
         }
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] ShopRequestDto dto)
         {
-            var response = await shopsRepository.Update(dto);
+            var response = await shopService.Update(dto);
             return Ok(response);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var response = await shopsRepository.Delete(id);
+            var response = await shopService.Delete(id);
             return Ok(response);
         }
     }
