@@ -42,10 +42,12 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IShopsRepository, ShopsRepository>();
+builder.Services.AddScoped<IShopRenterRepository, ShopRenterRepository>();
 
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IShopService, ShopService>();
+builder.Services.AddScoped<IShopRenterService, ShopRenterService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -92,6 +94,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
