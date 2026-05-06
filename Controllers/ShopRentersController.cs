@@ -26,6 +26,13 @@ namespace AmarBariAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetByShopId/{id}")]
+        public async Task<IActionResult> GetByShopId(long id)
+        {
+            var result = await shopRenterService.GetByShopId(id);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromForm] ShopRenterRequestDto dto)
         {

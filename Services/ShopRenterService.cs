@@ -19,6 +19,11 @@ namespace AmarBariAPI.Services
             return await shopRenterRepository.GetById(id);
         }
 
+        public async Task<Result<List<ShopRenterResponseDto>>> GetByShopId(long shopId)
+        {
+            return await shopRenterRepository.GetByShopId(shopId);
+        }
+
         public async Task<Result<long>> Create(ShopRenterRequestDto dto)
         {
             return await shopRenterRepository.Create(dto);

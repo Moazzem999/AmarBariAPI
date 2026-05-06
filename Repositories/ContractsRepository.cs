@@ -73,6 +73,31 @@ namespace AmarBariAPI.Repositories
             return await Result<ContractResponseDto>.SuccessAsync("", data);
         }
 
+        public async Task<Result<List<ContractResponseDto>>> GetByShopRenterId(long shopRenterId)
+        {
+            var data = await context.Contracts
+                .AsNoTracking()
+                .Where(x => x.ShopRenterId == shopRenterId)
+                .Select(x => new ContractResponseDto
+                {
+                    Id = x.Id,
+                    ShopRenterId = x.ShopRenterId,
+                    ShopRenterName = x.ShopRenter.Name,
+                    Description = x.Description,
+                    StartDate = x.StartDate,
+                    EndDate = x.EndDate,
+                    FilePath = x.FilePath,
+                    CreatedOn = x.CreatedOn,
+                    UpdatedOn = x.UpdatedOn,
+                    CreatedBy = x.CreatedBy,
+                    UpdatedBy = x.UpdatedBy,
+                    Status = x.Status
+                })
+                .ToListAsync();
+
+            return await Result<List<ContractResponseDto>>.SuccessAsync("", data);
+        }
+
         public async Task<Result<long>> Create(ContractRequestDto dto)
         {
             var maxFileSize = 2 * 1024 * 1024; // 2MB
