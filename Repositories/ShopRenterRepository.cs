@@ -94,15 +94,23 @@ namespace AmarBariAPI.Repositories
 
         public async Task<Result<long>> Create(ShopRenterRequestDto dto)
         {
+            var maxFileSize = 300 * 1024; // 300 KB
+            string[] allowedFileTypes = [".jpg", ".jpeg", ".png"];
+
             if (dto is null)
                 return await Result<long>.BadRequestAsync("Invalid request.");
-
-            if (dto.Image != null && dto.Image.Length > 300 * 1024)
-                return await Result<long>.BadRequestAsync("Image size must be less than 300 KB.");
 
             string? imagePath = null;
             if (dto.Image != null)
             {
+                var fileType = Path.GetExtension(dto.Image.FileName).ToLower();
+
+                if (dto.Image.Length > maxFileSize)
+                    return await Result<long>.BadRequestAsync("Image size must be less than 300 KB.");
+
+                if (string.IsNullOrEmpty(fileType) || !allowedFileTypes.Contains(fileType))
+                    return await Result<long>.BadRequestAsync("Invalid file type. Allowed types: .jpg, .jpeg, .png");
+
                 imagePath = await SaveImage(dto.Image);
             }
 
@@ -133,6 +141,9 @@ namespace AmarBariAPI.Repositories
 
         public async Task<Result<ShopRenterResponseDto>> Update(ShopRenterRequestDto dto)
         {
+            var maxFileSize = 300 * 1024; // 300 KB
+            string[] allowedFileTypes = [".jpg", ".jpeg", ".png"];
+
             if (dto is null)
                 return await Result<ShopRenterResponseDto>.BadRequestAsync("Invalid request.");
 
@@ -144,11 +155,17 @@ namespace AmarBariAPI.Repositories
             if (data is null)
                 return await Result<ShopRenterResponseDto>.RecordNotFoundAsync("Shop Renter not found.");
 
-            if (dto.Image != null && dto.Image.Length > 300 * 1024)
-                return await Result<ShopRenterResponseDto>.BadRequestAsync("Image size must be less than 300 KB.");
 
             if (dto.Image != null)
             {
+                var fileType = Path.GetExtension(dto.Image.FileName).ToLower();
+
+                if (dto.Image.Length > maxFileSize)
+                    return await Result<ShopRenterResponseDto>.BadRequestAsync("Image size must be less than 300 KB.");
+
+                if (string.IsNullOrEmpty(fileType) || !allowedFileTypes.Contains(fileType))
+                    return await Result<ShopRenterResponseDto>.BadRequestAsync("Invalid file type. Allowed types: .jpg, .jpeg, .png");
+
                 if (!string.IsNullOrEmpty(data.ImagePath))
                 {
                     DeleteImage(data.ImagePath);
