@@ -54,6 +54,44 @@ namespace AmarBariAPI.Repositories
             return await Result<List<ShopRenterResponseDto>>.SuccessAsync("", data);
         }
 
+        public async Task<Result<ShopRenterResponseDto>> GetById(long id)
+        {
+            var data = await context.ShopRenters
+                .AsNoTracking()
+                .Where(x => x.Id == id && x.Status == Status.Active)
+                .Select(x => new ShopRenterResponseDto
+                {
+                    Id = x.Id,
+                    ShopId = x.ShopId,
+                    ShopName = x.Shop.Name,
+                    Name = x.Name,
+                    FatherName = x.FatherName,
+                    DateOfBirth = x.DateOfBirth,
+                    MaritalStatus = x.MaritalStatus,
+                    Religion = x.Religion,
+                    PresentAddress = x.PresentAddress,
+                    PermanentAddress = x.PermanentAddress,
+                    Occupation = x.Occupation,
+                    AcademicQualification = x.AcademicQualification,
+                    Mobile = x.Mobile,
+                    NidNo = x.NidNo,
+                    RentDate = x.RentDate,
+                    AdvancedPaymet = x.AdvancedPaymet,
+                    ImagePath = x.ImagePath,
+                    CreatedOn = x.CreatedOn,
+                    UpdatedOn = x.UpdatedOn,
+                    CreatedBy = x.CreatedBy,
+                    UpdatedBy = x.UpdatedBy,
+                    Status = x.Status
+                })
+                .FirstOrDefaultAsync();
+
+            if (data is null)
+                return await Result<ShopRenterResponseDto>.RecordNotFoundAsync("Shop Renter not found.");
+
+            return await Result<ShopRenterResponseDto>.SuccessAsync("", data);
+        }
+
         public async Task<Result<long>> Create(ShopRenterRequestDto dto)
         {
             if (dto is null)

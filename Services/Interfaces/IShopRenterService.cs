@@ -6,6 +6,7 @@ namespace AmarBariAPI.Services.Interfaces
     public interface IShopRenterService
     {
         Task<Result<List<ShopRenterResponseDto>>> GetAllShopRenters();
+        Task<Result<ShopRenterResponseDto>> GetById(long id);
         Task<Result<long>> Create(ShopRenterRequestDto dto);
         Task<Result<ShopRenterResponseDto>> Update(ShopRenterRequestDto dto);
         Task<Result<string>> Delete(long id);

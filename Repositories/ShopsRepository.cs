@@ -1,4 +1,4 @@
-﻿using AmarBariAPI.Dtos.Shop;
+using AmarBariAPI.Dtos.Shop;
 using AmarBariAPI.Entities.Context;
 using AmarBariAPI.Entities.Shop;
 using AmarBariAPI.Repositories.Interfaces;
@@ -39,6 +39,34 @@ namespace AmarBariAPI.Repositories
                 .ToListAsync();
 
             return await Result<List<ShopResponseDto>>.SuccessAsync("", data);
+        }
+
+        public async Task<Result<ShopResponseDto>> GetById(long id)
+        {
+            var data = await context.Shops
+                .AsNoTracking()
+                .Where(x => x.Id == id && x.Status == Status.Active)
+                .Select(x => new ShopResponseDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    MarketName = x.MarketName,
+                    ShopNumber = x.ShopNumber,
+                    CurrentRent = x.CurrentRent,
+                    OwnerId = x.UserId,
+                    OwnerName = x.User.Name,
+                    CreatedOn = x.CreatedOn,
+                    UpdatedOn = x.UpdatedOn,
+                    CreatedBy = x.CreatedBy,
+                    UpdatedBy = x.UpdatedBy,
+                    Status = x.Status
+                })
+                .FirstOrDefaultAsync();
+
+            if (data is null)
+                return await Result<ShopResponseDto>.RecordNotFoundAsync("Shop not found.");
+
+            return await Result<ShopResponseDto>.SuccessAsync("", data);
         }
 
         public async Task<Result<long>> Create(ShopRequestDto dto)
