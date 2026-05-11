@@ -46,6 +46,7 @@ builder.Services.AddScoped<IShopRenterRepository, ShopRenterRepository>();
 builder.Services.AddScoped<IContractsRepository, ContractsRepository>();
 builder.Services.AddScoped<IFlatsRepository, FlatsRepository>();
 builder.Services.AddScoped<IHomesRepository, HomesRepository>();
+builder.Services.AddScoped<IFlatRenterRepository, FlatRenterRepository>();
 
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -54,6 +55,7 @@ builder.Services.AddScoped<IShopRenterService, ShopRenterService>();
 builder.Services.AddScoped<IContractsService, ContractsService>();
 builder.Services.AddScoped<IFlatsService, FlatsService>();
 builder.Services.AddScoped<IHomesService, HomesService>();
+builder.Services.AddScoped<IFlatRenterService, FlatRenterService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
