@@ -44,12 +44,14 @@ builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IShopsRepository, ShopsRepository>();
 builder.Services.AddScoped<IShopRenterRepository, ShopRenterRepository>();
 builder.Services.AddScoped<IContractsRepository, ContractsRepository>();
+builder.Services.AddScoped<IFlatsRepository, FlatsRepository>();
 
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IShopService, ShopService>();
 builder.Services.AddScoped<IShopRenterService, ShopRenterService>();
 builder.Services.AddScoped<IContractsService, ContractsService>();
+builder.Services.AddScoped<IFlatsService, FlatsService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
