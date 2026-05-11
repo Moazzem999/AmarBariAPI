@@ -19,6 +19,11 @@ namespace AmarBariAPI.Services
             return await flatsRepository.GetById(id);
         }
 
+        public async Task<Result<List<FlatResponseDto>>> GetByHomeId(long homeId)
+        {
+            return await flatsRepository.GetByHomeId(homeId);
+        }
+
         public async Task<Result<long>> Create(FlatRequestDto dto)
         {
             return await flatsRepository.Create(dto);

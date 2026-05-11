@@ -26,6 +26,13 @@ namespace AmarBariAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetByHomeId/{id}")]
+        public async Task<IActionResult> GetByHomeId(long id)
+        {
+            var result = await flatsService.GetByHomeId(id);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] FlatRequestDto dto)
         {

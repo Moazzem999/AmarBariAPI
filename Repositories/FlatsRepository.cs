@@ -49,7 +49,7 @@ namespace AmarBariAPI.Repositories
             var userId = currentUserService.UserId;
             var data = await context.Flats
                 .AsNoTracking()
-                .Where(x => x.Id == id && x.Status == Status.Active)
+                .Where(x => x.Id == id && x.Status == Status.Active && x.CreatedBy == userId)
                 .Select(x => new FlatResponseDto
                 {
                     Id = x.Id,
@@ -75,6 +75,36 @@ namespace AmarBariAPI.Repositories
                 return await Result<FlatResponseDto>.RecordNotFoundAsync("Flat not found.");
 
             return await Result<FlatResponseDto>.SuccessAsync("", data);
+        }
+
+        public async Task<Result<List<FlatResponseDto>>> GetByHomeId(long homeId)
+        {
+            var userId = currentUserService.UserId;
+            var data = await context.Flats
+                .AsNoTracking()
+                .Where(x => x.HomeId == homeId && x.Status == Status.Active && x.CreatedBy == userId)
+                .Select(x => new FlatResponseDto
+                {
+                    Id = x.Id,
+                    HomeId = x.HomeId,
+                    HomeName = x.Home.Name,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Floor = x.Floor,
+                    CurrentRent = x.CurrentRent,
+                    GasBill = x.GasBill,
+                    WaterBill = x.WaterBill,
+                    ServiceCharge = x.ServiceCharge,
+                    OthersBill = x.OthersBill,
+                    CreatedOn = x.CreatedOn,
+                    UpdatedOn = x.UpdatedOn,
+                    CreatedBy = x.CreatedBy,
+                    UpdatedBy = x.UpdatedBy,
+                    Status = x.Status
+                })
+                .ToListAsync();
+
+            return await Result<List<FlatResponseDto>>.SuccessAsync("", data);
         }
 
         public async Task<Result<long>> Create(FlatRequestDto dto)
