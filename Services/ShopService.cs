@@ -27,7 +27,7 @@ namespace AmarBariAPI.Services
             return await shopsRepository.Update(dto);
         }
 
-        public async Task<Result<string>> Delete(int id)
+        public async Task<Result<string>> Delete(long id)
         {
             return await shopsRepository.Delete(id);
         }

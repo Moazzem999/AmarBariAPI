@@ -39,7 +39,7 @@ namespace AmarBariAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(long id)
         {
             var response = await shopService.Delete(id);
             return Ok(response);

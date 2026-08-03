@@ -141,7 +141,7 @@ namespace AmarBariAPI.Repositories
             return await Result<ShopResponseDto>.SuccessAsync($"Shop successfully created", responseDto);
         }
 
-        public async Task<Result<string>> Delete(int id)
+        public async Task<Result<string>> Delete(long id)
         {
             var data = await context.Shops.Where(x => x.Id == id && x.Status == Status.Active).FirstOrDefaultAsync();
 
