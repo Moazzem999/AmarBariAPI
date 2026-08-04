@@ -33,6 +33,20 @@ namespace AmarBariAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetAllMaritalStatus")]
+        public async Task<IActionResult> GetAllMaritalStatus()
+        {
+            var result = await shopRenterService.GetAllMaritalStatus();
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllReligion")]
+        public async Task<IActionResult> GetAllReligion()
+        {
+            var result = await shopRenterService.GetAllReligion();
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromForm] ShopRenterRequestDto dto)
         {

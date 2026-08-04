@@ -1,3 +1,4 @@
+using AmarBariAPI.Dtos.Common;
 using AmarBariAPI.Dtos.Shop;
 using AmarBariAPI.Shared.Infrastructure;
 
@@ -11,5 +12,7 @@ namespace AmarBariAPI.Repositories.Interfaces
         Task<Result<long>> Create(ShopRenterRequestDto dto);
         Task<Result<ShopRenterResponseDto>> Update(ShopRenterRequestDto dto);
         Task<Result<string>> Delete(long id);
+        Task<Result<List<DropdownDto>>> GetAllMaritalStatus();
+        Task<Result<List<DropdownDto>>> GetAllReligion();
     }
 }

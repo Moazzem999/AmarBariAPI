@@ -1,3 +1,4 @@
+using AmarBariAPI.Dtos.Common;
 using AmarBariAPI.Dtos.Shop;
 using AmarBariAPI.Repositories.Interfaces;
 using AmarBariAPI.Services.Interfaces;
@@ -37,6 +38,16 @@ namespace AmarBariAPI.Services
         public async Task<Result<string>> Delete(long id)
         {
             return await shopRenterRepository.Delete(id);
+        }
+
+        public async Task<Result<List<DropdownDto>>> GetAllMaritalStatus()
+        {
+            return await shopRenterRepository.GetAllMaritalStatus();
+        }
+
+        public async Task<Result<List<DropdownDto>>> GetAllReligion()
+        {
+            return await shopRenterRepository.GetAllReligion();
         }
     }
 }

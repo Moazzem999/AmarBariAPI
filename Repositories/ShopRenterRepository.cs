@@ -1,3 +1,4 @@
+using AmarBariAPI.Dtos.Common;
 using AmarBariAPI.Dtos.Shop;
 using AmarBariAPI.Entities.Context;
 using AmarBariAPI.Entities.Shop;
@@ -267,6 +268,32 @@ namespace AmarBariAPI.Repositories
             await context.SaveChangesAsync();
 
             return await Result<string>.SuccessAsync("Shop Renter successfully deleted.");
+        }
+
+        public async Task<Result<List<DropdownDto>>> GetAllMaritalStatus()
+        {
+            var data = Enum.GetValues<MaritalStatus>()
+                .Select(x => new DropdownDto
+                {
+                    Id = (int)x,
+                    Name = x.GetEnumDescription()
+                })
+                .ToList();
+
+            return await Result<List<DropdownDto>>.SuccessAsync("", data);
+        }
+
+        public async Task<Result<List<DropdownDto>>> GetAllReligion()
+        {
+            var data = Enum.GetValues<Religion>()
+                .Select(x => new DropdownDto
+                {
+                    Id = (int)x,
+                    Name = x.GetEnumDescription()
+                })
+                .ToList();
+
+            return await Result<List<DropdownDto>>.SuccessAsync("", data);
         }
 
         private async Task<string> SaveImage(IFormFile file)
